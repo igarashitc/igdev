@@ -1,6 +1,7 @@
 module model
 
     use const
+    use bnd
 
       implicit none
       private
@@ -61,8 +62,8 @@ endif
 !		    qq(i) = sin(x(i))
 		    cc(i) = 1d0 
                 enddo
-qq(margin) = qq(nx-margin)
-qq(nx)     = qq(margin+1)
+
+	call periodic_bnd(qq,margin,nx)
 
 		dt = 1e4
 

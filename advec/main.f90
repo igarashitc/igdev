@@ -25,8 +25,8 @@ program main
     call file_output(qq,nx,margin,nd)
 
     loop: do ns=1,nstop
-!	call integrate_ftcs(qq,cc,x,dx,nx,dt,cfl)
-	call integrate_upwind(qq,cc,x,dx,nx,dt,cfl)
+!	call integrate_ftcs(qq,cc,x,dx,nx,dt,margin,cfl)
+	call integrate_upwind(qq,cc,x,dx,nx,dt,margin,cfl)
 
 	timep = time
 	time = time+dt
