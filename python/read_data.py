@@ -2,6 +2,8 @@
 ##
 ## read data
 ##
+## qq,x = read_data('data/*_qq.txt')
+##
 ####################################
 import numpy as np
 from scipy.io import FortranFile

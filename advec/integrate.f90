@@ -101,4 +101,40 @@ contains
 
     end subroutine integrate_lw
 
+    subroutine integrate_upwind_conserve(qq,cc,x,dx,nx,dt,margin,cfl)
+
+	integer,intent(in) :: nx
+	real(8),dimension(nx),intent(in) :: x,dx
+
+	real(8),dimension(nx),intent(inout) :: qq             
+	real(8),dimension(nx),intent(in) :: cc
+	real(8),dimension(nx) :: qq0
+	real(8),dimension(nx) :: qqf
+
+	real(8),intent(inout) :: dt
+	real(8),intent(in) :: cfl
+
+	integer,intent(in) :: margin
+
+	integer :: i
+
+	!calcurate delta t
+	do i=margin+1,nx-margin
+	    dt = min(dt,cfl*dx(i)/cc(i))
+	enddo
+
+      qq0 = qq
+
+      do i=1,nx
+	qqf(i) = 0.5d0*(qq(i+1)*cc(i+1)+qq(i)*cc(i) - abs(cc(i))*(qq(i+1)-qq(i)))
+      enddo
+
+      !integrate by upwind
+      do i=margin+1,nx-margin
+	qq(i) = qq0(i) - dt*(qqf(i+1) - qqf(i))/dx(i)
+      enddo
+      call periodic_bnd(qq,margin,nx)
+
+    end subroutine integrate_upwind_conserve
+
 end module integrate

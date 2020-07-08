@@ -9,8 +9,10 @@ program main
 
     !time in simulation
     real(8) :: time,timep
+
     !number of steps
     integer :: ns
+
     !control variables
     integer :: nt1,nt2
     integer :: nd
@@ -26,7 +28,9 @@ program main
 
     loop: do ns=1,nstop
 !	call integrate_ftcs(qq,cc,x,dx,nx,dt,margin,cfl)
-	call integrate_upwind(qq,cc,x,dx,nx,dt,margin,cfl)
+!       call integrate_upwind(qq,cc,x,dx,nx,dt,margin,cfl)
+!	call integrate_lw(qq,cc,x,dx,nx,dt,margin,cfl)
+       call integrate_upwind_conserve(qq,cc,x,dx,nx,dt,margin,cfl)
 
 	timep = time
 	time = time+dt
